@@ -12,8 +12,9 @@ async function setupWebhook() {
     }
 
     // Ensure URL is properly formatted
-    const webhookUrl = 'https://2ced-197-211-59-110.ngrok-free.app'
-    // endpoint.startsWith('http')
+    const webhookUrl = 'https://a9f3-197-211-59-110.ngrok-free.app';
+  
+    //  endpoint.startsWith('http')
     //   ? endpoint
     //   : `https://${endpoint}`;
 

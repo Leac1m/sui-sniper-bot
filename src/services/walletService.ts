@@ -6,7 +6,7 @@ import { fromBase64 } from '@mysten/sui/utils';
 
 export async function createWallet(telegramId: number) {
   const keypair = new Ed25519Keypair();
-  const privateKey = keypair.getSecretKey(); // base64-encoded
+  const privateKey = keypair.getPublicKey().toBase64(); // base64-encoded
   const encryptedKey = encrypt(privateKey);
   const address = keypair.toSuiAddress();
 

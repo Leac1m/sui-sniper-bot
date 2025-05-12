@@ -1,7 +1,5 @@
-// /src/services/snipeService.ts
 import { getDB } from '@/db/mongoClient';
 import { decrypt } from '@/utils/encryption';
-import { fromBase64 } from '@mysten/sui/utils';
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
 import { SuiClient, getFullnodeUrl } from '@mysten/sui/client';
 import { Transaction } from '@mysten/sui/transactions';
@@ -15,9 +13,10 @@ export async function snipe(telegramId: number, recipient: string, amountSui: nu
     if (!wallet) throw new Error('Wallet not found');
 
     const decryptedKey = decrypt(wallet.encryptedPrivateKey);
-    const secret = fromBase64(decryptedKey).slice(0, 32);
-    const keypair = Ed25519Keypair.fromSecretKey(secret);
-    //   const address = keypair.toSuiAddress();
+    const keypair = Ed25519Keypair.fromSecretKey(decryptedKey);
+    const address = keypair.toSuiAddress();
+
+    if (address !== wallet.address) throw new Error(`Wallet resolution error: ${address} !== ${wallet.address}`);
 
     const coins = await client.getCoins({ owner: wallet.address });
     const inputCoin = coins.data.find((c) => BigInt(c.balance) >= BigInt(amountSui * 1e9));

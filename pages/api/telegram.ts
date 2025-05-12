@@ -134,8 +134,8 @@ bot.command('confirm', async (ctx) => {
     });
   } catch (err) {
     console.error('Confirm failed:', err);
-    ctx.reply('❌ Failed to execute snipe.');
-    // ctx.reply(`❌ Snipe failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    // ctx.reply('❌ Failed to execute snipe.');
+    ctx.reply(`❌ Snipe failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
 
   } finally {
     clearPendingSnipe(telegramId);
