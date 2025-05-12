@@ -12,9 +12,10 @@ async function setupWebhook() {
     }
 
     // Ensure URL is properly formatted
-    const webhookUrl = endpoint.startsWith('http')
-      ? endpoint
-      : `https://${endpoint}`;
+    const webhookUrl = 'https://2ced-197-211-59-110.ngrok-free.app'
+    // endpoint.startsWith('http')
+    //   ? endpoint
+    //   : `https://${endpoint}`;
 
     const URL = `${webhookUrl}/api/telegram`;
 

@@ -7,7 +7,7 @@ import { getWalletByTelegramId } from '@/services/walletService';
 import { getSuiBalance } from '@/services/balanceService';
 import { snipe } from '@/services/snipeService';
 
-import { startSniperLoop } from '@/bot/sniperJob';
+// import { startSniperLoop } from '@/bot/sniperJob';
 import { setPendingSnipe, getPendingSnipe, clearPendingSnipe } from '@/bot/snipeCache';
 
 
@@ -157,34 +157,34 @@ bot.command('cancel', async (ctx) => {
 });
 
 
-bot.command('autosnipe', async (ctx) => {
-  const telegramId = ctx.from?.id;
-  const input = ctx.message?.text?.split(' ') ?? [];
+// bot.command('autosnipe', async (ctx) => {
+//   const telegramId = ctx.from?.id;
+//   const input = ctx.message?.text?.split(' ') ?? [];
 
-  if (!telegramId) return ctx.reply('❌ Telegram ID not found.');
-  if (input.length !== 3) return ctx.reply('⚠️ Usage:\n/autosnipe <token_address> <amount>');
+//   if (!telegramId) return ctx.reply('❌ Telegram ID not found.');
+//   if (input.length !== 3) return ctx.reply('⚠️ Usage:\n/autosnipe <token_address> <amount>');
 
-  const token = input[1].trim();
-  const amount = parseFloat(input[2]);
+//   const token = input[1].trim();
+//   const amount = parseFloat(input[2]);
 
-  if (!/^0x[a-fA-F0-9]{64}$/.test(token)) {
-    return ctx.reply('⚠️ Invalid token address format.');
-  }
+//   if (!/^0x[a-fA-F0-9]{64}$/.test(token)) {
+//     return ctx.reply('⚠️ Invalid token address format.');
+//   }
 
-  if (isNaN(amount) || amount <= 0) {
-    return ctx.reply('⚠️ Invalid amount.');
-  }
+//   if (isNaN(amount) || amount <= 0) {
+//     return ctx.reply('⚠️ Invalid amount.');
+//   }
 
-  try {
-    ctx.reply(`🔎 Watching for token: \`${token}\`\nAuto-snipe will trigger at ${amount} SUI.`, {
-      parse_mode: 'Markdown'
-    });
-    await startSniperLoop(telegramId, token, amount);
-  } catch (err) {
-    console.error(err);
-    ctx.reply('❌ Failed to start auto-sniper.');
-  }
-});
+//   try {
+//     ctx.reply(`🔎 Watching for token: \`${token}\`\nAuto-snipe will trigger at ${amount} SUI.`, {
+//       parse_mode: 'Markdown'
+//     });
+//     await startSniperLoop(telegramId, token, amount);
+//   } catch (err) {
+//     console.error(err);
+//     ctx.reply('❌ Failed to start auto-sniper.');
+//   }
+// });
 
 
    

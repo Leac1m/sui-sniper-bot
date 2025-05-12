@@ -39,9 +39,9 @@ export async function snipe(telegramId: number, recipient: string, amountSui: nu
             options: { showEffects: true },
         });
 
-        if (!res.effects?.status?.status === 'success') {
-            throw new Error(`Transaction failed: ${res.effects?.status?.error}`);
-        }
+        // if (!res.effects?.status?.status === 'success') {
+        //     throw new Error(`Transaction failed: ${res.effects?.status?.error}`);
+        // }
 
         return res.digest;
     } catch (error) {
