@@ -1,6 +1,10 @@
+import { config } from '@/config/environment';
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI!;
+// const uri = process.env.MONGODB_URI!;
+// console.log(uri);
+
+const uri = config.mongodb.uri;
 
 if (!uri) throw Error("Please set your database url!");
 

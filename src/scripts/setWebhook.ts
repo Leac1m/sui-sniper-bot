@@ -1,23 +1,23 @@
 // /scripts/setWebhook.ts
-import { Telegraf } from 'telegraf';
 import 'dotenv/config';
+import { getBot } from '@/config/environment';
 
 async function setupWebhook() {
   try {
-    const bot = new Telegraf(process.env.BOT_TOKEN!);
-    const endpoint = process.env.ENDPOINT?.trim();
+    // Get URL from command line argument
+    const webhookUrl = process.argv[2];
 
-    if (!endpoint) {
-      throw new Error("ENDPOINT environment variable is not set");
+    if (!webhookUrl) {
+      console.error('Please provide a webhook URL as an argument');
+      console.error('Usage: npx ts-node scripts/setWebhook.ts <webhook-url>');
+      process.exit(1);
     }
 
-    // Ensure URL is properly formatted
-    const webhookUrl = 'https://a9f3-197-211-59-110.ngrok-free.app';
-  
-    //  endpoint.startsWith('http')
-    //   ? endpoint
-    //   : `https://${endpoint}`;
+    if (!webhookUrl.startsWith('https://')) {
+      throw new Error('Webhook URL must start with https://');
+    }
 
+    const bot = getBot();
     const URL = `${webhookUrl}/api/telegram`;
 
     console.log('Setting webhook to:', URL);
