@@ -3,7 +3,11 @@ import { createWallet, getWalletByTelegramId, importWallet } from "@/services/wa
 import { Context } from "telegraf";
 import { clearPendingTransfer, getPendingTransfer, setPendingTransfer, } from "../TransferCache";
 import { snipe } from "@/services/snipeService";
+import { Message } from 'telegraf/types';
 
+interface TextMessage extends Message.TextMessage {
+    text: string;
+}
 
 export const handleCreateWallet = async (ctx: Context) => {
     const telegramId = ctx.from?.id;
@@ -22,7 +26,14 @@ export const handleCreateWallet = async (ctx: Context) => {
 
 export const handleImportWallet = async (ctx: Context) => {
     const telegramId = ctx.from?.id;
-    const input = ctx.message?.text?.split(' ') ?? [];
+    
+    // Type guard to ensure we have a text message
+    if (!ctx.message || !('text' in ctx.message)) {
+        return ctx.reply('❌ Invalid message format');
+    }
+
+    const message = ctx.message as TextMessage;
+    const input = message.text.split(' ');
 
     if (!telegramId) return ctx.reply('❌ Telegram ID not found.');
     if (input.length < 2) return ctx.reply('⚠️ Please provide your private key.\nExample: /importwallet BASE64_KEY');
@@ -88,7 +99,8 @@ export const handleTranfer = async (ctx: Context) => {
     const telegramId = ctx.from?.id;
     if (!telegramId) return ctx.reply('❌ Telegram ID not found.');
 
-    const input = ctx.message?.text?.split(' ') ?? [];
+    const message = ctx.message as TextMessage;
+    const input = message?.text?.split(' ') ?? [];
     if (input.length !== 3) {
         return ctx.reply('⚠️ Usage:\n/transfer <recipient_address> <amount>');
     }
